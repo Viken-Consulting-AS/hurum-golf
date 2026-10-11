@@ -712,6 +712,11 @@
         }
 
         /* ── LIGA ────────────────────────────────────────── */
+        .league-news { margin-bottom: 3rem; padding: 2rem; border-radius: 12px; background: var(--green-deep); color: var(--white); }
+        .league-news .sec-tag { color: var(--gold-light); }
+        .league-news h2 { font-size: clamp(1.5rem, 4vw, 2rem); margin-bottom: 0.8rem; }
+        .league-news p { line-height: 1.8; margin-bottom: 1.5rem; }
+        .league-news .btn-gold { display: inline-block; }
         .league-formats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin: 2.5rem 0; }
         .league-format { background: var(--white); padding: 2rem; border-radius: 12px; }
         .league-format h3 { margin-bottom: 0.8rem; color: var(--green-deep); }
@@ -786,6 +791,12 @@
 <!-- SIMULATORER -->
 <section id="simulatorer">
     <div class="container">
+        <article class="league-news" aria-labelledby="league-news-title">
+            <div class="sec-tag">Nyhet</div>
+            <h2 id="league-news-title">Ligaen starter 12. oktober!</h2>
+            <p>Bli med på Winter Series eller Scramble Series hos Hurum Golf. Fra 12. oktober til 20. desember 2026 spiller vi ti runder – individuelt eller sammen med en fast partner.</p>
+            <a href="#liga" class="btn-gold">Les mer om Turnering - Liga →</a>
+        </article>
         <div class="sec-tag">Innendørs Golf</div>
         <h2 class="sec-title">Book Din <em>Simulator Tid</em></h2>
         <p class="sec-desc">Spill golf inne hele året på våre fire TrackMan 4-simulatorer. Velg en ledig tid og book enkelt og raskt.</p>
