@@ -711,6 +711,22 @@
             body.subpage .tab-panel.is-active > section:first-child { padding-top: 7.5rem; }
         }
 
+        /* ── LIGA ────────────────────────────────────────── */
+        .league-formats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin: 2.5rem 0; }
+        .league-format { background: var(--white); padding: 2rem; border-radius: 12px; }
+        .league-format h3 { margin-bottom: 0.8rem; color: var(--green-deep); }
+        .league-format p, .league-summary { line-height: 1.8; color: var(--text-muted); }
+        .league-table-wrap { overflow-x: auto; margin-top: 1rem; }
+        .league-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+        .league-table caption { text-align: left; font-weight: 600; font-size: 1.15rem; margin-bottom: 1rem; color: var(--green-deep); }
+        .league-table th { background: var(--green-deep); color: var(--white); text-align: left; }
+        .league-table th, .league-table td { padding: 0.9rem 1rem; border-bottom: 1px solid rgba(0,0,0,0.1); }
+        .league-table tbody tr:nth-child(even) { background: rgba(0,0,0,0.03); }
+        .league-table th:first-child, .league-table td:first-child { text-align: center; }
+        @media (max-width: 768px) {
+            .league-formats { grid-template-columns: 1fr; gap: 1rem; }
+            .league-table { min-width: 560px; }
+        }
     </style>
 </head>
 <body>
@@ -732,6 +748,7 @@
             <li><a href="#simulatorer" onclick="closeMenu()">Simulatorer</a></li>
             <li><a href="#tjenester"   onclick="closeMenu()">Pro Timer</a></li>
             <li><a href="#utstyr"      onclick="closeMenu()">Pro Shop</a></li>
+            <li><a href="#liga"        onclick="closeMenu()">Turnering - Liga</a></li>
             <li><a href="#regler"      onclick="closeMenu()">Regler</a></li>
             <li><a href="#instagram"   onclick="closeMenu()">Instagram</a></li>
             <li><a href="#kontakt"     onclick="closeMenu()">Kontakt</a></li>
@@ -927,6 +944,47 @@
     </div>
 </section>
 </div><!-- /fane: utstyr -->
+
+<!-- FANE: LIGA -->
+<div class="tab-panel" id="liga">
+<section>
+    <div class="container">
+        <div class="sec-tag">Turnering - Liga · 2026</div>
+        <h2 class="sec-title">Turneringer hos <em>Hurum Golf</em></h2>
+        <p class="sec-desc">Winter Series og Scramble Series 2026</p>
+        <p class="league-summary">Begge turneringsseriene går fra 12. oktober til 20. desember 2026 og består av 10 runder hver. Her finner du spillformat, deltakerkrav og banene som skal spilles.</p>
+        <div class="league-formats">
+            <div class="league-format">
+                <h3>Winter Series</h3>
+                <p>Individuell turnering med netto slagspill, der spillehandicap trekkes fra slagresultatet. Ukens runde spilles når det passer innen spilleperioden. Deltakelse krever TrackMan-handicap basert på minst to runder.</p>
+            </div>
+            <div class="league-format">
+                <h3>Scramble Series</h3>
+                <p>To spillere på hvert lag. Begge slår, og laget velger det beste slaget videre helt til ballen er i hullet. <strong>Samme partner skal brukes gjennom hele serien.</strong></p>
+            </div>
+        </div>
+        <p class="league-summary"><strong>Sammenlagtresultat:</strong> Begge seriene bruker Order of Merit, en sammenlagtliste basert på poeng fra rundene.</p>
+        <div class="league-table-wrap">
+            <table class="league-table">
+                <caption>Baner i spillerekkefølge</caption>
+                <thead><tr><th scope="col">Runde</th><th scope="col">Winter Series</th><th scope="col">Scramble Series</th></tr></thead>
+                <tbody>
+                    <tr><td>1</td><td>Marcella Club</td><td>Byneset Golf North Course</td></tr>
+                    <tr><td>2</td><td>Black Desert Resort</td><td>Malaro GK Skytteholm</td></tr>
+                    <tr><td>3</td><td>The Club at Olde Stone</td><td>Sola GK – Forus</td></tr>
+                    <tr><td>4</td><td>The Club at Steyn City</td><td>Emirates Golf Club – Majlis Course</td></tr>
+                    <tr><td>5</td><td>St Andrews Links Old Course</td><td>Båstad Golfklubb Old Course</td></tr>
+                    <tr><td>6</td><td>Hualalai Resort</td><td>La Vista Country Club</td></tr>
+                    <tr><td>7</td><td>Mammoth Dunes</td><td>Firekeeper Golf Course</td></tr>
+                    <tr><td>8</td><td>Old Macdonald</td><td>Clearwater Golf Club</td></tr>
+                    <tr><td>9</td><td>Bandon Dunes</td><td>Green Valley Ranch</td></tr>
+                    <tr><td>10</td><td>Olympic Golf Course</td><td>Miklagard GolfKlubb</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+</div><!-- /fane: liga -->
 
 <!-- FANE: REGLER -->
 <div class="tab-panel" id="regler">
