@@ -732,9 +732,61 @@
             .league-formats { grid-template-columns: 1fr; gap: 1rem; }
             .league-table { min-width: 560px; }
         }
+        .league-intro { border: 0; padding: 0; width: 100vw; max-width: none; height: 100dvh; max-height: none; background: #0a2414; color: #fff; }
+        .league-intro::backdrop { background: #0a2414; }
+        .intro-layout { min-height: 100%; display: grid; grid-template-columns: 1.15fr 1fr; }
+        .intro-copy { padding: clamp(2rem, 6vw, 6rem); display: flex; flex-direction: column; justify-content: center; background: radial-gradient(ellipse at bottom left, #27553b, transparent 70%); }
+        .intro-brand { font-size: 0.8rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 2.5rem; }
+        .intro-kicker { color: var(--gold-light); font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1rem; }
+        .intro-copy h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(3rem, 6.5vw, 6.5rem); font-weight: 400; line-height: 0.95; margin-bottom: 1.5rem; }
+        .intro-copy h2 em { color: var(--gold-light); font-weight: 400; }
+        .intro-lead { max-width: 40rem; line-height: 1.7; color: #d8e3da; }
+        .intro-series { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0; padding-top: 1.5rem; border-top: 1px solid #ffffff30; }
+        .intro-series h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+        .intro-series p { color: #b8cbbd; font-size: 0.85rem; line-height: 1.6; }
+        .intro-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; }
+        .intro-dismiss { color: #d8e3da; background: transparent; border: 0; border-bottom: 1px solid #ffffff55; padding: 0.5rem 0; font: inherit; cursor: pointer; }
+        .intro-photo { position: relative; min-height: 280px; background: linear-gradient(180deg, #0a241420, #0a2414c0), url('IMG_30791.jpg') center / cover; display: flex; align-items: flex-end; padding: 3rem; }
+        .intro-date { position: relative; border-left: 2px solid var(--gold); padding-left: 1.5rem; }
+        .intro-date strong { font-family: 'Cormorant Garamond', Georgia, serif; display: block; font-size: clamp(3rem, 5vw, 5rem); font-weight: 400; }
+        .intro-date span { letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.8rem; }
+        .intro-close { position: absolute; z-index: 2; top: 1rem; right: 1rem; width: 44px; height: 44px; border: 1px solid #ffffff70; border-radius: 50%; background: #0a2414a0; color: white; font-size: 1.6rem; cursor: pointer; }
+        .intro-timer { margin-top: 2rem; font-size: 0.75rem; color: #b8cbbd; }
+        .intro-progress { height: 2px; background: #ffffff20; margin-top: 0.6rem; overflow: hidden; }
+        .intro-progress::after { content: ''; display: block; height: 100%; background: var(--gold); transform-origin: left; animation: intro-countdown 8s linear forwards; }
+        @keyframes intro-countdown { to { transform: scaleX(0); } }
+        @media (max-width: 768px) {
+            .intro-layout { grid-template-columns: 1fr; }
+            .intro-copy { padding: 2rem 1.5rem; }
+            .intro-brand { margin-bottom: 1.5rem; }
+            .intro-photo { min-height: 220px; padding: 2rem 1.5rem; }
+            .intro-actions .btn-gold { padding: 0.9rem 1.5rem; }
+        }
+        @media (prefers-reduced-motion: reduce) { .intro-progress::after { animation: none; } }
     </style>
 </head>
 <body>
+<dialog class="league-intro" id="leagueIntro" aria-labelledby="introTitle" aria-describedby="introLead">
+    <button class="intro-close" type="button" aria-label="Lukk og gå til forsiden" onclick="dismissLeagueIntro()">×</button>
+    <div class="intro-layout">
+        <div class="intro-copy">
+            <div class="intro-brand">Hurum Golf · Sætre</div>
+            <p class="intro-kicker">Nyhet · Ligaene starter 12. oktober</p>
+            <h2 id="introTitle">Din vinter.<br>Ditt spill.<br><em>Din liga.</em></h2>
+            <p class="intro-lead" id="introLead">Gjør vinteren til golfsesong. Ti runder, nye baner og poeng å kjempe om – fra 12. oktober til 20. desember 2026.</p>
+            <div class="intro-series">
+                <div><h3>Winter Series</h3><p>Spill individuelt med netto slagspill. TrackMan-handicap basert på minst to runder kreves.</p></div>
+                <div><h3>Scramble Series</h3><p>Ta med en fast partner. To på laget, beste slag videre – sammen gjennom hele serien.</p></div>
+            </div>
+            <div class="intro-actions">
+                <a class="btn-gold" href="#liga" onclick="dismissLeagueIntro(true)">Utforsk ligaene →</a>
+                <button class="intro-dismiss" type="button" onclick="dismissLeagueIntro()">Gå til forsiden</button>
+            </div>
+            <div class="intro-timer">Forsiden åpnes automatisk om <span id="introSeconds">8</span> sekunder<div class="intro-progress" aria-hidden="true"></div></div>
+        </div>
+        <div class="intro-photo"><div class="intro-date"><span>Sesongstart</span><strong>12. oktober</strong><span>10 runder · To ligaer · Én golfvinter</span></div></div>
+    </div>
+</dialog>
 
 <!-- NAVBAR -->
 <nav id="nav">
@@ -1181,6 +1233,33 @@ routeFromHash();
 
 function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
 function closeMenu()  { document.getElementById('navLinks').classList.remove('open'); }
+
+const leagueIntro = document.getElementById('leagueIntro');
+let introTimeout, introInterval;
+let introPreviousOverflow;
+function dismissLeagueIntro(readMore = false) {
+    clearTimeout(introTimeout);
+    clearInterval(introInterval);
+    if (leagueIntro.open) {
+        leagueIntro.close();
+        document.body.style.overflow = introPreviousOverflow;
+    }
+    if (readMore) {
+        location.hash = 'liga';
+        routeFromHash();
+    }
+}
+leagueIntro.addEventListener('cancel', event => { event.preventDefault(); dismissLeagueIntro(); });
+if ((!location.hash || location.hash === '#hjem') && typeof leagueIntro.showModal === 'function') {
+    introPreviousOverflow = document.body.style.overflow;
+    leagueIntro.showModal();
+    document.body.style.overflow = 'hidden';
+    const introDeadline = Date.now() + 8000;
+    introInterval = setInterval(() => {
+        document.getElementById('introSeconds').textContent = Math.max(0, Math.ceil((introDeadline - Date.now()) / 1000));
+    }, 200);
+    introTimeout = setTimeout(dismissLeagueIntro, 8000);
+}
 </script>
 </body>
 </html>
